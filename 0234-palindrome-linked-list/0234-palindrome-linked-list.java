@@ -9,56 +9,50 @@
  * }
  */
 class Solution {
-    public ListNode findMid(ListNode head)
+    public ListNode findMiddle(ListNode head)
     {
+        //using fast and slow pointer approach
         ListNode slow= head;
         ListNode fast= head;
         
-        while(fast.next != null && fast.next.next != null)// 
+        while(fast.next != null && fast.next.next!=null)
         {
-            slow=slow.next;
             fast= fast.next.next;
+            slow=slow.next;
         }
         return slow;
     }
+    
     public ListNode reverse(ListNode head)
     {
-        ListNode cur=head;
         ListNode prev=null;
-        while(cur!=null)
+        ListNode curr= head;
+        ListNode front;
+        
+        while(curr!=null)
         {
-            ListNode front= cur.next;
-            cur.next=prev;
-            prev=cur;
-            cur=front;
+            front= curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=front;
         }
         return prev;
     }
     public boolean isPalindrome(ListNode head) {
-    
-        //Edge cases
-        if(head==null || head.next==null)
+        
+        ListNode middle = findMiddle(head);
+        ListNode head2 = reverse(middle.next);
+        
+        while(head2!= null)
         {
-            return true;
-        }
-        
-        //Find Middle of the list
-        ListNode middle= findMid(head);
-        
-        //Reverse middle of the list
-        ListNode secondH = reverse(middle.next);
-        
-        //Compare first and second half
-        ListNode firstH= head;
-        while(secondH !=null)
-        {
-            if(firstH.val != secondH.val)
+            if(head2.val != head.val)
             {
                 return false;
             }
-            secondH=secondH.next;
-            firstH=firstH.next;
+            head=head.next;
+            head2=head2.next;
         }
         return true;
+        
     }
 }
