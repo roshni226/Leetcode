@@ -10,38 +10,26 @@
  */
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
-        if(k==0||head==null)
+        if(k==0||head==null||head.next==null)
         {
             return head;
         }
-        ListNode slow=head;//used to break the connection
-        ListNode fast=head;//used to connect last node to first node
-        int count=0;//size of ll
-        while(fast!=null)
+        ListNode temp=head;//used to break the connection
+        ListNode end=head;//used to connect last node to first node
+        int count=1;//size of ll
+        while(temp.next!=null)
         {
-            fast=fast.next;
+            temp=temp.next;
             count++;
         }
-        fast=head;
-        
-        for(int i=0;i<(k%count);i++)
+        if(k%count==0) return head;
+        temp.next=head;          
+        for(int i=0;i<k%count;k++)
         {
-            fast=fast.next;
+            temp=temp.next;
         }
-        while(fast.next!=null)
-        {
-            slow=slow.next;
-            fast=fast.next;
-        }
-        
-        if(k==count)//no rotations required if k= size of ll
-        {
-            return head;
-        }
-        
-        fast.next=head;
-        head=slow.next;
-        slow.next=null;
+        head=temp.next;
+        temp.next=null;
         return head;
     }
 }
