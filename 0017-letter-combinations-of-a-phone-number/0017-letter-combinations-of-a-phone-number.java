@@ -1,12 +1,12 @@
 import java.util.*;
 class Solution {
     static String keypad[]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-    public static void printComb(String s, int i, List<String> temp, String comb)
+    public static List<String> printComb(String s, int i, List<String> temp, String comb)
     {
         if(i==s.length())
         {
             temp.add(comb);
-            return;
+            return temp;
         }
         
         char curr= s.charAt(i);
@@ -16,7 +16,7 @@ class Solution {
         {
             printComb(s,i+1,temp,comb+keyval.charAt(a));
         }
-        return;
+        return temp;
     }
     public List<String> letterCombinations(String digits){
         List<String> temp = new ArrayList<>();
@@ -25,8 +25,8 @@ class Solution {
             return temp;
         }
         
-        printComb(digits,0,temp,"");
-        return temp;
+        return printComb(digits,0,temp,"");
+    
         
     }
 }
