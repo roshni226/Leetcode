@@ -1,47 +1,30 @@
-// class Solution {
-//     public static String[] keypad= {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-//     public static List<String> letterCombinations(String digits) {
-        
-//         formList(digits,0,"");
-//         return str;
-//     }
-//     public static List<String> str= new ArrayList<>();
-//     public static void formList(String digits,int digidx, String combinationStr)
-//     {
-//         if(digidx == digits.length())
-//         {
-//             return;
-//         }
-//         str.add(combinationStr);
-//         char keypadIndex= digits.charAt(digidx);
-//         String curr= keypad[keypadIndex-'0'];//retrieving string from keypad suppose keypadIndex=2 so '2'-'0'=50-49=2 and we get abc as curr
-//         for(int i=0;i<curr.length();i++)
-//         {
-//             formList(digits,digidx,combinationStr+curr.charAt(i));
-//         }
-//     }
-// }
-
+import java.util.*;
 class Solution {
-    public static String[] keypad = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-    public static List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<>();
-        if (digits == null || digits.isEmpty()) {
-            return result;
+    String keypad[]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+   public List<String> printComb(String s, int i, List<String> ans, StringBuilder comb) {
+        if (i == s.length()) {
+            ans.add(comb.toString());
+            return ans;
         }
-        formList(digits, 0, "", result);
-        return result;
-    }
 
-    public static void formList(String digits, int digidx, String combinationStr, List<String> result) {
-        if (digidx == digits.length()) {
-            result.add(combinationStr);
-            return;
+        char curr = s.charAt(i);
+        String keyval = keypad[curr - '0'];
+
+        for (int a = 0; a < keyval.length(); a++) {
+            comb.append(keyval.charAt(a));
+            printComb(s, i + 1, ans, comb);
+            comb.deleteCharAt(comb.length() - 1); // backtrack
         }
-        char keypadIndex = digits.charAt(digidx);
-        String curr = keypad[keypadIndex - '0'];
-        for (int i = 0; i < curr.length(); i++) {
-            formList(digits, digidx + 1, combinationStr + curr.charAt(i), result);
+
+        return ans; // Ensure we return the accumulated answers
+}
+    public List<String> letterCombinations(String digits){
+        List<String> temp = new ArrayList<>();
+        if (digits.isEmpty()) {
+            return temp; // Return empty list if input is empty
         }
+        StringBuilder comb=new StringBuilder();;
+        return printComb(digits,0,temp,comb);
+        
     }
 }
