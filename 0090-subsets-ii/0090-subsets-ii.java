@@ -1,27 +1,22 @@
-import java.util.*;
 class Solution {
-    public void allUniqueSub(int []nums, int n, List<Integer> temp,HashSet<List<Integer>> set)
+    public void comb(int c[], int ind, List<Integer> temp, List<List<Integer>> ans)
     {
-        if(n==0)
-        {
-            set.add(new ArrayList<Integer>(temp));
-            return;
-        }
-        //to include
-        temp.add(nums[n-1]);
-        allUniqueSub(nums,n-1,temp,set);
-        temp.remove(temp.size() - 1);  // backtrack
+        ans.add(new ArrayList<>(temp));
+            
         
-        //to exclude
-        allUniqueSub(nums,n-1,temp,set);
+        for(int i=ind;i<c.length;i++)
+        {
+            if(i!=ind && c[i]==c[i-1]) continue;
+            temp.add(c[i]);
+            comb(c,i+1,temp,ans);
+            temp.remove(temp.size()-1);
+        }
     }
-    
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-        List<List<Integer>> ans =new ArrayList<>();
-        HashSet<List<Integer>> set= new HashSet<>();
         Arrays.sort(nums);
-        allUniqueSub(nums,nums.length,new ArrayList<Integer>(),set);
-        ans.addAll(set);
+        List<List<Integer>> ans= new ArrayList<>();
+        List<Integer> temp= new ArrayList<>();
+        comb(nums,0,temp,ans);
         return ans;
     }
 }
