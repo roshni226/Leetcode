@@ -20,7 +20,7 @@ class Solution {
                 arr[k++]=nums[i];
             }
         }
-        int dp[][]= new int[n+1][s2+1];
+        int dp[][]= new int[k+1][s2+1];
         dp[0][0]=1;
         for(int i=1;i<=k;i++)
         {
