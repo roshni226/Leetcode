@@ -34,7 +34,7 @@ class Solution {
             }
             else
             {
-                if(dp[i-1][j]>=dp[i][j-1])
+                if(dp[i-1][j]>dp[i][j-1])
                 {
                     s=str1.charAt(i-1)+s;
                     i--;
