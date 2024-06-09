@@ -1,22 +1,22 @@
 class Solution {
     public int lis(int[] nums, int n,int ind,int prev, int dp[][])
     {
-        if(ind==n)
+        if(ind==n+1)
         {
             return 0;
         }
-        if(dp[ind+1][prev+1]!=-1) return dp[ind+1][prev+1];
+        if(dp[ind][prev]!=-1) return dp[ind][prev];
         
-        if(prev==-1||nums[ind]>nums[prev])
+        if(prev==0||nums[ind-1]>nums[prev-1])
         {
-            dp[ind+1][prev+1]=Integer.max(1+lis(nums,n,ind+1,ind,dp),
+            dp[ind][prev]=Integer.max(1+lis(nums,n,ind+1,ind,dp),
                                           lis(nums,n,ind+1,prev,dp));
         }
         else
         {
-            dp[ind+1][prev+1]=lis(nums,n,ind+1,prev,dp);
+            dp[ind][prev]=lis(nums,n,ind+1,prev,dp);
         }
-        return dp[ind+1][prev+1];
+        return dp[ind][prev];
     }
         
     public int lengthOfLIS(int[] nums) {
@@ -26,6 +26,6 @@ class Solution {
         {
             Arrays.fill(dp[i],-1);
         }
-        return lis(nums,n,0,-1,dp);
+        return lis(nums,n,1,0,dp);
     }
 }
