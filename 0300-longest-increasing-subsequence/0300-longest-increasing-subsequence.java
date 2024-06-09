@@ -1,39 +1,31 @@
 class Solution {
-    
-    public int lengthOfLIS(int[] nums) {
-        HashSet<Integer> set= new HashSet<>();
-        int n= nums.length;
-        for(int i=0;i<n;i++)
+    public int lis(int[] nums, int n,int ind,int prev, int dp[][])
+    {
+        if(ind==n)
         {
-            set.add(nums[i]);
+            return 0;
         }
-        int nums2[]= new int[set.size()];        
-        int k=0;
-        for(int i:set)
-        {
-            nums2[k++]=i;
-        }
-        int m= nums2.length;
-        //sort the array
-        Arrays.sort(nums2);
-        int dp[][]= new int[n+1][m+1];
-        for(int i=0;i<=n;i++) dp[i][0]=0;
-        for(int j=0;j<=m;j++) dp[0][j]=0;
+        if(dp[ind+1][prev+1]!=-1) return dp[ind+1][prev+1];
         
-        for(int i=1;i<=n;i++)
+        if(prev==-1||nums[ind]>nums[prev])
         {
-            for(int j=1;j<=m;j++)
-            {
-                if(nums[i-1]==nums2[j-1])
-                {
-                    dp[i][j]=dp[i-1][j-1]+1;
-                }
-                else
-                {
-                    dp[i][j]= Integer.max(dp[i-1][j],dp[i][j-1]);
-                }
-            }
+            dp[ind+1][prev+1]=Integer.max(1+lis(nums,n,ind+1,ind,dp),
+                                          lis(nums,n,ind+1,prev,dp));
         }
-        return dp[n][m];
+        else
+        {
+            dp[ind+1][prev+1]=lis(nums,n,ind+1,prev,dp);
+        }
+        return dp[ind+1][prev+1];
+    }
+        
+    public int lengthOfLIS(int[] nums) {
+        int n=nums.length;
+        int dp[][]= new int [n+1][n+1];
+        for(int i=0;i<=n;i++)
+        {
+            Arrays.fill(dp[i],-1);
+        }
+        return lis(nums,n,0,-1,dp);
     }
 }
