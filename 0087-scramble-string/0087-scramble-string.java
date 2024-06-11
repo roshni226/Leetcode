@@ -20,17 +20,17 @@ class Solution {
             return mp.get(key);
         }
         //check for anagram
-        char temp1[]= s1.toCharArray();
-        char temp2[]= s2.toCharArray();
-        Arrays.sort(temp1);
-        Arrays.sort(temp2);
-        String copy1= new String(temp1);
-        String copy2= new String(temp2);
-        if(copy1.equals(copy2)!=true)
-        {
-            mp.put(key,false);
-            return false;
-        }
+        // char temp1[]= s1.toCharArray();
+        // char temp2[]= s2.toCharArray();
+        // Arrays.sort(temp1);
+        // Arrays.sort(temp2);
+        // String copy1= new String(temp1);
+        // String copy2= new String(temp2);
+        // if(copy1.equals(copy2)!=true)
+        // {
+        //     mp.put(key,false);
+        //     return false;
+        // }
         boolean flag=false;
         for(int i=1;i<=n-1;i++)
         {
