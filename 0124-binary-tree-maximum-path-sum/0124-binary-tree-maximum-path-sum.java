@@ -21,8 +21,8 @@ class Solution {
         {
             return 0;
         }
-        int leftPath= Math.max(0,maxPathUtil(root.left));
-        int rightPath= Math.max(0,maxPathUtil(root.right));
+        int leftPath= maxPathUtil(root.left);
+        int rightPath= maxPathUtil(root.right);
         
         int currAns= Math.max(Math.max(root.val,leftPath+rightPath+root.val),
                       Math.max(leftPath+root.val,rightPath+root.val));
