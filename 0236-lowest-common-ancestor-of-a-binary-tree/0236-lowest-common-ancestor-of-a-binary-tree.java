@@ -8,39 +8,22 @@
  * }
  */
 class Solution {
-    public boolean getPath(TreeNode root, List<TreeNode> path, TreeNode n)
-    {
-        if(root==null)//node not found in current path
-            return false;
-        path.add(root);
-        if(root.val==n.val)//node found return path
-            return true;
-        
-        //if root.val != n.val then search in roots left and right subtree
-        boolean ans1= getPath(root.left,path,n);
-        boolean ans2= getPath(root.right,path,n);
-        
-        if(ans1 || ans2)//node found in left or right subtree
-            return true;
-        //otherwise remove root from path list as n does'nt exist in a path through root
-        path.remove(path.size()-1);
-        return false;
-    }
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        List<TreeNode> path1= new ArrayList<>();
-        List<TreeNode> path2= new ArrayList<>();
+        if(root==null)
+            return null;
         
-        getPath(root,path1,p);
-        getPath(root,path2,q);
-        int i;
-        for(i=0;i<path1.size() && i<path2.size();i++)
-        {
-            if(path1.get(i).val!=path2.get(i).val)
-                break;
-        }
+        if(root.val==p.val || root.val==q.val)
+            return root;
         
-        return path1.get(i-1);
+        TreeNode leftSubroot= lowestCommonAncestor(root.left,p,q);
+        TreeNode rightSubroot= lowestCommonAncestor(root.right,p,q);
         
-        
+        if(rightSubroot==null)
+            return leftSubroot;
+        else if(leftSubroot==null)
+            return rightSubroot;
+        else
+            return root;
+              
     }
 }
