@@ -1,37 +1,45 @@
 class Solution {
-    public void bfs(int node, int[][] isConnected, int[] vis, int n)
+    public void dfs(int []vis, int node, ArrayList<ArrayList<Integer>> adj)
     {
-        Queue<Integer> queue= new LinkedList<>();
-        queue.add(node);
         vis[node]=1;
-        while(!queue.isEmpty())
+        for(int i: adj.get(node))
         {
-            int curr= queue.poll();
-            for(int j=0;j<n;j++)
+            if(vis[i]==0)
             {
-                if(isConnected[curr][j]==1)
-                {
-                    if(vis[j]==0)
-                    {
-                        queue.add(j);
-                        vis[j]=1;
-                    }
-                    
-                }
-            }   
+                dfs(vis,i,adj);
+            }
         }
     }
     public int findCircleNum(int[][] isConnected) {
         int n= isConnected.length;
+        //Converting adjacency matrix to adjacency list
+        ArrayList<ArrayList<Integer>> adj= new ArrayList<>();
+        for(int i=0;i<n;i++)
+        {
+            adj.add(new ArrayList<Integer>());
+        }
+        
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(isConnected[i][j]==1)
+                {
+                    adj.get(i).add(j);
+                    adj.get(j).add(i);
+                }
+            }
+        }
+        int count=0;        
         int vis[]= new int[n+1];
-        int count=0;
         for(int i=0;i<n;i++)
         {
             if(vis[i]==0)
             {
                 count++;
-                bfs(i,isConnected,vis,n);
+                dfs(vis,i,adj);
             }
+            
         }
         return count;
     }
