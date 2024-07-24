@@ -1,39 +1,64 @@
 class Solution {
-    static int countUtil(String s1, String s2, int ind1, int ind2, int[][] dp) {
-        // If we have exhausted s2, there's one valid subsequence (empty string) in s1.  
-        if (ind2==0)
-            return 1;
-        if (ind1 ==0 )
-            return 0;
-        if (dp[ind1][ind2] != -1)
-            return dp[ind1][ind2];
-        // If we have exhausted s1 but not s2, there are no valid subsequences.
+//     public int count(String s, String t, int n, int m, int dp[][])
+//     {
+//         if(m==0)// t is exhausted<- valid subsequence found
+//             return 1;
+//         if(n==0 && m!=0)//s is exhausted but t is not<- no valid subsequence
+//             return 0;
+//         //subproblem computed
+//         if(dp[n][m]!=-1) return dp[n][m];
         
-        // If the result is already computed, return it.
-
-        // If the characters at the current positions match, we can either leave one character from s1
-        // or continue to the next character in s1 while staying at the same character in s2.
-        if (s1.charAt(ind1-1) == s2.charAt(ind2-1)) {
-            int leaveOne = countUtil(s1, s2, ind1 - 1, ind2 - 1, dp);
-            int stay = countUtil(s1, s2, ind1 - 1, ind2, dp);
-
-            // Add the two possibilities and take modulo prime to avoid integer overflow.
-            return dp[ind1][ind2] = (leaveOne + stay);
-        } else {
-            // If the characters don't match, we can only continue to the next character in s1.
-            return dp[ind1][ind2] = countUtil(s1, s2, ind1 - 1, ind2, dp);
-        }
-    }
-    static int subsequenceCounting(String s1, String s2, int lt, int ls) {
-        // Initialize a DP array to store intermediate results
-        int dp[][] = new int[lt+1][ls+1];
-        for (int rows[] : dp)
-            Arrays.fill(rows, -1);
-
-        // Call the recursive helper function to compute the count
-        return countUtil(s1, s2, lt, ls , dp);
-    }
+//         if(s.charAt(n-1)==t.charAt(m-1))
+//         {
+//             //valid total count= including curr char+ excluding curr char
+//             return count(s,t,n-1,m-1,dp)+count(s,t,n-1,m,dp);
+//         }
+//         else
+//         {   //Invalid exclude 
+//             return count(s,t,n-1,m,dp);
+//         }
+//     }
+//     public int numDistinct(String s, String t) {
+//         int n=s.length();
+//         int m=t.length();
+        
+//         int dp[][]= new int [n+1][m+1];
+//         for(int i=0;i<=n;i++)
+//         {
+//             Arrays.fill(dp[i],-1);
+//         }
+        
+//         return count(s,t,n,m,dp);
+//     }
+    
     public int numDistinct(String s, String t) {
-         return subsequenceCounting(s, t, s.length(), t.length());
+        int n=s.length();
+        int m=t.length();
+        
+        int dp[][]= new int [n+1][m+1];
+        for(int i=0;i<=n;i++)
+        {
+            dp[i][0]=1;
+        }
+        for(int j=1;j<=m;j++)
+        {
+            dp[0][j]=0;
+        }
+        
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=m;j++)
+            {
+                if(s.charAt(i-1)==t.charAt(j-1))
+                {
+                    dp[i][j]=dp[i-1][j-1]+dp[i-1][j];
+                }
+                else
+                {
+                    dp[i][j]=dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][m];
     }
 }
