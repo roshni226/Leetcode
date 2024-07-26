@@ -14,25 +14,34 @@
  * }
  */
 class Solution {
-    static int count;
-    public void util(TreeNode root)
+    public int findLHeight(TreeNode root)
     {
-        if(root.left!=null)
-        {
-            count++;
-            util(root.left);
+         int height = 0;
+        while (root != null) {
+            root = root.left;
+            height++;
         }
-        if(root.right!=null)
-        {
-            count++;
-            util(root.right);
-        }
+        return height;
+        
+    }
+    public int findRHeight(TreeNode root)
+    {
+        if(root==null)
+            return 0;
+        return 1+findRHeight(root.right);
+        
     }
     public int countNodes(TreeNode root) {
-        count=0;
         if(root==null) return 0;
-        count++;
-        util(root);
-        return count;
+        int lh=findLHeight(root);
+        int rh=findRHeight(root);
+        if(lh==rh)
+        {
+            return (int)Math.pow(2,lh)-1;
+        }
+        else{
+            return 1+countNodes(root.left)+countNodes(root.right);
+        }
+        
     }
 }
