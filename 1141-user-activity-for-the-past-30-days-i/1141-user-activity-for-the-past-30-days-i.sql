@@ -1,7 +1,14 @@
 # Write your MySQL query statement below
-select 
+# select 
+#  activity_date as day,
+#  count(distinct user_id) as active_users
+#  from Activity 
+#  where activity_date between '2019-06-28' and '2019-07-28'
+#  group by activity_date;
+ 
+ select 
  activity_date as day,
  count(distinct user_id) as active_users
  from Activity 
- where activity_date between '2019-06-28' and '2019-07-28'
+ where activity_date between date_sub('2019-07-27', interval 29 day) and '2019-07-27'
  group by activity_date;
