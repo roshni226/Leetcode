@@ -9,7 +9,7 @@ class Solution {
         while(r<n)
         {
             sum+=nums[r];
-            while(sum>k && l<=r)
+            while(sum>k )//&& l<=r)
             {
                 sum-=nums[l];
                 l++;
