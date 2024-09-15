@@ -12,10 +12,10 @@ class Solution {
             {
                 count+=map.getOrDefault(0,0);
             }
-            else if(remainder == 30)
-            {
-                count+=map.getOrDefault(30,0);
-            }
+            // else if(remainder == 30)
+            // {
+            //     count+=map.getOrDefault(30,0);
+            // }
             else
             {
                 count+=map.getOrDefault(target,0);
