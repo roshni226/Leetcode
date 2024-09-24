@@ -35,7 +35,7 @@ class Solution {
         int n= nums.length;
         if(n==0) return 0;
         Set<Integer> set= new HashSet<>();
-        int count=1,maxi=1;
+        int count=0,maxi=0;
         for(int i=0;i<n;i++)
         {
             set.add(nums[i]);
